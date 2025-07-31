@@ -1,0 +1,216 @@
+<% layout("/layouts/boilerplate") %>
+  <style>
+    #filters {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .filter {
+      text-align: center;
+      margin-right: 2rem;
+      margin-top: 2rem;
+      opacity: 0.7;
+      text-decoration: none;
+      color: black;
+    }
+
+    .filter:hover {
+      opacity: 1;
+      cursor: pointer;
+    }
+
+    .price-filter {
+      padding: 1rem;
+      display: flex;
+      justify-content: center;
+      margin-top: 16px;
+    }
+
+    .price-filter select {
+      padding: 0.5rem;
+      border-radius: 15px;
+      min-width: 150px;
+      font-size: 1rem;
+    }
+
+
+    .dropdown {
+      margin-top: 32px;
+      margin-left: 20px;
+    }
+
+    .dropdown-menu {
+      min-width: 220px;
+    }
+
+
+    .search-wrapper {
+      max-width: 600px;
+      margin: 1rem auto;
+      gap: 0.5rem;
+    }
+
+    .search-input {
+      border-radius: 50px;
+      padding: 0.6rem 1.2rem;
+      border: 1px solid #111010;
+      flex-grow: 1;
+    }
+
+    .search-btn {
+      background-color: #ff3b5c;
+      color: white;
+      border-radius: 50px;
+      padding: 0.6rem 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      border: none;
+      transition: background-color 0.3s ease;
+    }
+
+    .search-btn:hover {
+      background-color: #e63753;
+      color: white;
+    }
+
+
+
+
+
+    @media (max-width: 768px) {
+      .search-container {
+        padding: 1rem;
+        justify-content: stretch;
+      }
+
+      form {
+        flex-direction: column;
+        align-items: stretch;
+        margin-left: 35px;
+      }
+
+      input[type="text"],
+      .edit-btn {
+        width: 100%;
+        text-align: center;
+      }
+
+      #filters {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+      }
+    }
+  
+  
+  </style>
+
+
+
+  <form action="/listings" method="GET" class="search-wrapper d-flex">
+    <input type="text" name="search" class="form-control search-input" placeholder="Search by city..."
+      value="<%= typeof search !== 'undefined' ? search : '' %>">
+    <button type="submit" class="btn search-btn">
+      <i class="bi bi-search"></i> Search
+    </button>
+  </form>
+
+
+  <div id="filters">
+
+    <a class="filter" href="/listings?category=Trending">
+      <div><i class="fa-solid fa-fire"></i></div>
+      <p>Trending</p>
+    </a>
+
+    <a class="filter" href="/listings?category=Rooms">
+      <div><i class="fa-solid fa-bed"></i></div>
+      <p>Rooms</p>
+    </a>
+
+    <a class="filter" href="/listings?category=Mountains">
+      <div><i class="fa-solid fa-mountain-city"></i></div>
+      <p>Mountains</p>
+    </a>
+
+    <a class="filter" href="/listings?category=Castles">
+      <div><i class="fa-brands fa-fort-awesome"></i></div>
+      <p>Castles</p>
+    </a>
+
+    <a class="filter" href="/listings?category=Pools">
+      <div><i class="fa-solid fa-person-swimming"></i></div>
+      <p>Pools</p>
+    </a>
+
+    <a class="filter" href="/listings?category=Iconic Cities">
+      <div><i class="fa-solid fa-city"></i></div>
+      <p>Iconic Cities</p>
+    </a>
+
+    <a class="filter" href="/listings?category=Farming">
+      <div><i class="fa-solid fa-wheat-awn"></i></div>
+      <p>Farming</p>
+    </a>
+
+    <a class="filter" href="/listings?category=Beach">
+      <div><i class="fa-solid fa-umbrella-beach"></i></div>
+      <p>Beach</p>
+    </a>
+
+    <a class="filter" href="/listings?category=Lake font">
+      <div><i class="fa-solid fa-water"></i></div>
+      <p>Lake font</p>
+    </a>
+
+    <a class="filter" href="/listings?category=Boating">
+      <div><i class="fa-solid fa-sailboat"></i></div>
+      <p>Boating</p>
+    </a>
+
+    <a class="filter" href="/listings?category=Gaming">
+      <div><i class="fa-solid fa-gamepad"></i></div>
+      <p>Gaming</p>
+    </a>
+
+    <!-- Price filter below -->
+    <div class="dropdown ">
+      <button class="btn btn-outline-dark dropdown-toggle" type="button" data-bs-toggle="dropdown">
+        Filter by price
+      </button>
+      <div class="dropdown-menu p-3  price">
+        <form action="/listings" method="GET" class="d-flex flex-column" style="gap: 0.5rem;">
+          <input type="number" name="minPrice" class="form-control" placeholder="Min Price ₹"
+            value="<%= typeof minPrice !== 'undefined' ? minPrice : '' %>">
+          <input type="number" name="maxPrice" class="form-control" placeholder="Max Price ₹"
+            value="<%= typeof maxPrice !== 'undefined' ? maxPrice : '' %>">
+          <button class="btn btn-dark mt-2">Apply</button>
+        </form>
+      </div>
+    </div>
+
+  </div>
+
+
+
+
+
+
+  <div class="row row-col-lg-3 row-cols-md-2 row cols-sm-1 mt-3 images">
+    <% for(let listing of listings){ %>
+      <a href="/listings/<%= listing._id %>" class="listing-link">
+        <div class="card col listing-card">
+          <img src="<%=listing.image.url%>" class="card-img-top" alt="listing_image" style="height:20rem" />
+          <div class="card-img-overlay"></div>
+          <div class="card-body">
+            <p class="card-text">
+              <b>
+                <%= listing.title %>
+              </b><br />
+              &#8377;<%= listing.price.toLocaleString("en-IN")%> /night
+            </p>
+          </div>
+        </div>
+      </a>
+      <% } %>
+  </div>

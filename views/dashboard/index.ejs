@@ -1,0 +1,440 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wanderlust</title>
+  <link rel="icon" type="image/png" href="/image/logo1.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+
+  <%-include("../includes/flash.ejs") %>
+
+<!-- Bootstrap CSS -->
+ 
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<style>
+  body {
+    overflow-x: hidden;
+  }
+  .view{
+    margin-right: 180px !important;
+  }
+  
+  .offcanvas-backdrop {
+    z-index: 1040;
+  }
+  .sidebar-link {
+    color: white;
+    padding: 10px 20px;
+    display: block;
+    text-decoration: none;
+  }
+  .sidebar-link:hover,
+  .sidebar-link.active {
+    background-color: #0d6efd;
+    border-radius: 5px;
+  }
+
+  .card-img-top {
+    height: 200px;
+    object-fit: cover;
+  }
+  .logo{
+    color: red;
+    font-size: 2rem;
+    
+  }
+  
+  .navbar{
+    min-height: 11vh;
+    background-color: #ebebeb;
+  }
+
+@media (max-width: 991px) {
+    .mobile-large-text {
+      font-size: 2rem; /* larger text only on small screens */
+    }
+  }
+
+</style>
+</head>
+<body>
+<!--Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top shadow-sm">
+    <div class="container-fluid">
+
+      <!-- Toggle Button with Font Awesome icon -->
+      <button class="btn btn-outline-secondary d-lg-none me-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSidebar">
+        <i class="fa-solid fa-bars fs-3"></i> <!-- Big icon -->
+      </button>
+
+      <!-- Logo (hidden on mobile) -->
+      <a class="navbar-brand d-none d-lg-flex align-items-center" href="/listings">
+        <i class=" logo fa-regular fa-compass fs-3 me-1"></i>
+        <a class="nav-link fw-bold text-dark px-2 px-lg-3 " href="/listings">Explore</a>
+      </a>
+
+      <!-- Explore and Logout links -->
+      <div class="ms-auto d-flex align-items-center">
+        <a class="nav-link fw-bold text-dark  px-2 px-lg-3 " href="/logout">Log Out</a>
+      </div>
+
+    </div>
+  </nav>
+<!-- Sidebar Offcanvas for Mobile -->
+<div class="offcanvas offcanvas-start text-bg-dark" tabindex="-1" id="offcanvasSidebar">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title">Wanderlust</h5>
+    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
+  </div>
+  <div class="offcanvas-body d-lg-none">
+    <a href="#" class="sidebar-link active" data-target="homeSection">
+  <i class="fas fa-home me-2"></i> Home
+</a>
+
+<a href="#" class="sidebar-link" data-target="bookingHistory">
+  <i class="fas fa-history me-2"></i> Booking History
+</a>
+
+<a href="#" class="sidebar-link" data-target="yourProperty">
+  <i class="fas fa-building me-2"></i> Your Property
+</a>
+
+<a href="#" class="sidebar-link" data-target="bookingRequests">
+  <i class="fas fa-envelope-open-text me-2"></i> Booking Requests
+</a>
+
+<a href="#" class="sidebar-link" data-target="approvedStatus">
+  <i class="fas fa-check-circle me-2"></i> Approved Status
+</a>
+
+<a href="#" class="sidebar-link" data-target="addProperty">
+  <i class="fas fa-plus-square me-2"></i> Add Property
+</a>
+
+
+  </div>
+</div>
+
+<div class="container-fluid">
+  <div class="row">
+    <!-- Sidebar (visible on desktop) -->
+    <nav class="col-lg-2 d-none d-lg-block bg-dark sidebar text-white min-vh-100 position-fixed">
+      <div class="pt-3">
+        <h4 class="text-center">Wanderlust</h4>
+        <a href="#" class="sidebar-link active" data-target="homeSection">
+  <i class="fas fa-home me-2"></i> Home
+</a>
+
+        <a href="#" class="sidebar-link" data-target="bookingHistory">
+  <i class="fas fa-history me-2"></i> Booking History
+</a>
+
+        <a href="#" class="sidebar-link" data-target="yourProperty">
+  <i class="fas fa-building me-2"></i> Your Property
+</a>
+
+<a href="#" class="sidebar-link" data-target="bookingRequests">
+  <i class="fas fa-envelope-open-text me-2"></i> Booking Requests
+</a>
+
+<a href="#" class="sidebar-link" data-target="approvedStatus">
+  <i class="fas fa-check-circle me-2"></i> Approved Status
+</a>
+
+<a href="#" class="sidebar-link" data-target="addProperty">
+  <i class="fas fa-plus-square me-2"></i> Add Property
+</a>
+      </div>
+    </nav>
+
+    <!-- Main content -->
+     <main class="col-lg-10 offset-lg-2 py-4 px-3">
+
+    <!--home -->
+    <div id="homeSection" class="content-section ">
+  <h2 class="mb-4"><i>Your Property Summary</i></h2>
+  <div class="row">
+    <!-- Booking History Count -->
+    <div class="col-md-6 col-lg-3 mb-4">
+      <div class="card text-white bg-primary shadow-sm">
+        <div class="card-body text-center">
+          <h5 class="card-title">Booking History</h5>
+          <p class="card-text fs-4"><%= ownBookings.length %></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Your Property Count -->
+     <% let approvedCount = listings.filter(l => l.isApproved).length; %>
+    <div class="col-md-6 col-lg-3 mb-4">
+      <div class="card text-white bg-success shadow-sm">
+        <div class="card-body text-center">
+          <h5 class="card-title">Your Properties</h5>
+          <p class="card-text fs-4"><%= approvedCount %></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Booking Requests Count -->
+    <div class="col-md-6 col-lg-3 mb-4">
+      <div class="card text-white bg-warning shadow-sm">
+        <div class="card-body text-center">
+          <h5 class="card-title">Booking Requests</h5>
+          <p class="card-text fs-4"><%= bookings.length %></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Approved Listings Count -->
+    <div class="col-md-6 col-lg-3 mb-4">
+      <div class="card text-white bg-info shadow-sm">
+        <div class="card-body text-center">
+          <h5 class="card-title">Approved Properties</h5>
+          <p class="card-text fs-4">
+            <%= bookings.filter(b => b.Status === 'approved').length %>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+      
+
+
+
+
+
+      <!-- Booking History -->
+      <div id="bookingHistory" class="content-section d-none">
+        <h2>Your Booking History</h2>
+        <div class="row">
+          <% ownBookings.forEach(booking => { %>
+            <% if (booking.listing) { %>
+              <div class="col-md-6 col-lg-3 mb-4">
+
+                <div class="card shadow-sm br-4">
+                  <% if (booking.listing.image?.url) { %>
+                    <img src="<%= booking.listing.image.url %>" class="card-img-top" alt="Property Image">
+                  <% } else { %>
+                    <img src="https://via.placeholder.com/400x200?text=No+Image" class="card-img-top" alt="No Image">
+                  <% } %>
+                  <div class="card-body">
+                    <h5 class="card-title"><%= booking.listing.title %></h5>
+                    <p class="card-text">
+                      <strong>Location:</strong> <%= booking.listing.location %><br>
+                      <strong>Check-in:</strong> <%= booking.checkIn.toDateString() %><br>
+                      <strong>Check-out:</strong> <%= booking.checkOut.toDateString() %><br>
+                      <strong>Total Amount:</strong> ₹<%= booking.totalAmount %>
+                      <form method="POST" action="/dashboard/booking/<%= booking._id %>?_method=DELETE">
+                <button type="submit" class="btn btn-outline-danger btn-sm">Delete</button>
+              </form>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            <% } %>
+          <% }) %>
+        </div>
+      </div>
+
+
+
+      <!-- Your Property -->
+      <div id="yourProperty" class="content-section d-none">
+        <h2>Your Property</h2>
+       <% let approvedListings = listings.filter(l => l.isApproved); %>
+<% if (approvedListings.length === 0) { %>
+  <p>No approved properties yet.</p>
+<% } else { %>
+  <div class="row">
+    <% approvedListings.forEach(listing => { %>
+      <div class="col-md-6 col-lg-4 mb-4">
+        <div class="card shadow-sm">
+          <img src="<%= listing.image.url %>" class="card-img-top" alt="Property Image">
+          <div class="card-body">
+            <h5 class="card-title"><%= listing.title %></h5>
+            <p><strong>Location:</strong> <%= listing.location %></p>
+            <form action="/dashboard/availability/<%= listing._id %>" method="POST">
+              <label>Available Dates:</label>
+              <input type="text" name="availableDates" class="form-control mb-2 flatpickr"
+                     data-dates='<%= JSON.stringify(listing.availableDates || []) %>' placeholder="Select dates">
+              <button class="btn btn-success btn-sm">Save</button>
+            </form>
+
+            <div class="d-flex justify-content-between mt-2">
+              <a href="/listings/<%= listing._id %>/edit" class="btn btn-danger btn-sm ">Edit</a>
+              <a href="/listings/<%= listing._id %>" class="btn btn-primary btn-sm view ">View</a>
+              <form action="/listings/<%= listing._id %>?_method=DELETE" method="POST" class="d-inline">
+                <button class="btn btn-dark btn-sm ">Delete</button>
+              </form>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    <% }) %>
+  </div>
+<% } %>
+
+      </div>
+
+
+
+      <!-- Booking Requests -->
+<div id="bookingRequests" class="content-section d-none">
+  <h2 class="mb-4">Booking Requests</h2>
+
+  <!-- Search by mobile number -->
+  <form class="mb-4">
+    <input type="text" class="form-control shadow-sm" id="searchMobile" placeholder=" Search by mobile number">
+  </form>
+
+  <% if (bookings.length === 0) { %>
+    <div class="alert alert-info">No booking requests found.</div>
+  <% } else { %>
+    <% bookings.forEach(booking => { %>
+      <div class="card shadow-sm mb-4 p-3 booking-card" style="border: 2px solid black;"> 
+        <div class="row g-3">
+          <div class="col-md-6">
+           <div class="booking-details" style="font-family: 'Poppins', sans-serif; font-size: 14px;">
+  <p><strong><i class="fas fa-user me-1"></i>User:</strong> <%= booking.user.username %></p>
+  <p><strong><i class="fas fa-phone me-1"></i>Mobile:</strong> <%= booking.user.mobile || "Not Provided" %></p>
+  <p><strong><i class="fas fa-house-user me-1"></i>Property:</strong> <%= booking.listing.title %></p>
+</div>
+
+          </div>
+          <div class="col-md-6">
+            <p><strong><i class="fas fa-calendar-alt me-1"></i>Check-in:</strong> <%= booking.checkIn.toDateString() %></p>
+<p><strong><i class="fas fa-calendar-check me-1"></i>Check-out:</strong> <%= booking.checkOut.toDateString() %></p>
+<p><strong><i class="fas fa-indian-rupee-sign me-1"></i>Total Amount:</strong> ₹<%= booking.totalAmount %></p>
+
+          </div>
+        </div>
+        <div class="text-end mt-2">
+          <form method="POST" action="/dashboard/booking/<%= booking._id %>?_method=DELETE">
+            <button type="submit" class="btn btn-sm btn-outline-danger">Delete Request</button>
+          </form>
+        </div>
+      </div>
+    <% }) %>
+  <% } %>
+</div>
+
+
+
+      <!-- Approved Status -->
+     <!-- Approved Status -->
+<div id="approvedStatus" class="content-section d-none">
+  <h2>Property Status</h2>
+
+  <% listings.forEach(listing => { %>
+    <div class="card mb-3 p-3 shadow-sm">
+      <div class="row g-2">
+        <!-- Small Image -->
+        <div class="col-4 col-md-3">
+          <img src="<%= listing.image.url %>" class="img-fluid rounded shadow-sm" style="max-height: 100px; object-fit: cover;" alt="property image">
+        </div>
+
+        <!-- Property Info -->
+        <div class="col-8 col-md-9">
+          <p class="mb-1"><strong><i class="fa-solid fa-building-circle-check me-1"></i><%= listing.title %></strong></p>
+          <p class="mb-1 small"><i class="fa-solid fa-location-dot me-1 text-danger"></i><%= listing.location %></p>
+          <p class="mb-1 small"><i class="fa-solid fa-indian-rupee-sign me-1 text-success"></i><%= listing.price %> per night</p>
+
+          <% if (listing.isApproved === null) { %>
+            <span class="badge bg-warning"><i class="fa-solid fa-clock me-1"></i>Pending</span>
+
+          <% } else if (listing.isApproved === true) { %>
+            <span class="badge bg-success"><i class="fa-solid fa-circle-check me-1"></i>Approved</span>
+
+          <% } else if (listing.isApproved === false) { %>
+            <span class="badge bg-danger"><i class="fa-solid fa-xmark me-1"></i>Rejected</span>
+            <p class="small mt-1"><strong>Reason:</strong> <%= listing.rejectionMessage %></p>
+            <a href="/listings/<%= listing._id %>/editowner" class="btn btn-warning btn-sm mt-2">
+              <i class="fa-solid fa-pen-to-square me-1"></i>Edit & Resubmit
+            </a>
+          <% } %>
+        </div>
+      </div>
+    </div>
+  <% }) %>
+</div>
+
+
+      <!-- add property -->
+<div id="addProperty" class="content-section d-none">
+  <div class="card shadow-sm p-4 mb-4">
+    <div class="card-body text-center">
+      <h2 class="card-title mb-3">Add a New Property</h2>
+      <p class="card-text mb-4">Click the button below to add a new property listing.</p>
+      <a href="/listings/new" class="btn btn-primary px-4 py-2">Go to Add New Property</a>
+    </div>
+  </div>
+</div>
+
+
+
+
+    </main>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+<!-- Bootstrap & Flatpickr -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+<!-- Tab switching + date picker -->
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const tabButtons = document.querySelectorAll(".sidebar-link");
+    tabButtons.forEach(btn => {
+      btn.addEventListener("click", e => {
+        e.preventDefault();
+        tabButtons.forEach(b => b.classList.remove("active"));
+        document.querySelectorAll(".content-section").forEach(s => s.classList.add("d-none"));
+        btn.classList.add("active");
+        const target = btn.dataset.target;
+        document.getElementById(target).classList.remove("d-none");
+      });
+    });
+
+    document.querySelectorAll(".flatpickr").forEach(input => {
+      const selectedDates = JSON.parse(input.dataset.dates || "[]");
+      flatpickr(input, {
+        mode: "multiple",
+        dateFormat: "Y-m-d",
+        minDate: "today",
+        defaultDate: selectedDates
+      });
+    });
+  });
+</script>
+
+
+<script>
+  document.getElementById('searchMobile').addEventListener('input', function () {
+    const query = this.value.toLowerCase();
+    document.querySelectorAll('.booking-card').forEach(card => {
+      const mobile = card.querySelector('p:nth-of-type(2)').textContent.toLowerCase();
+      card.style.display = mobile.includes(query) ? 'block' : 'none';
+    });
+  });
+</script>
+
+
+</body>
+</html>

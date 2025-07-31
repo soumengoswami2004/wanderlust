@@ -1,0 +1,95 @@
+<% layout("/layouts/boilerplate") %>
+
+<div class="container mt-5">
+  <div class="card shadow-lg overflow-hidden">
+    <div class="row g-0">
+
+      <!-- Image -->
+      <div class="col-md-6">
+        <img src="<%= listing.image.url %>" alt="<%= listing.title %>" class="img-fluid w-100 h-100 object-fit-cover" style="max-height: 400px;">
+      </div>
+
+      <!-- Booking Form -->
+      <div class="col-md-6 d-flex align-items-center">
+        <div class="card-body p-4">
+          <h3 class="mb-4">Book: <%= listing.title %></h3>
+          <p><strong>Price per day:</strong> ₹<%= listing.price %></p>
+          <p id="totalDisplay"><strong>Total Amount:</strong> ₹0</p>
+
+
+          <form action="/listings/<%= listing._id %>/book" method="POST">
+            <div class="mb-3">
+              <label for="dateRange" class="form-label">Select Dates:</label>
+              <input type="text" id="dateRange" name="dateRange" class="form-control bg-white text-dark border border-secondary" placeholder="Select check-in & check-out" required>
+            </div>
+
+            <button type="submit" class="btn btn-success w-100">Confirm Booking</button>
+          </form>
+
+          
+          
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Flatpickr Calendar -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+<script>
+  const pricePerDay = <%= listing.price %>;
+
+  flatpickr("#dateRange", {
+    mode: "range",
+    dateFormat: "Y-m-d",
+    minDate: "today",
+    enable: <%- JSON.stringify(availableDates.map(d => d.toISOString().split("T")[0])) %>,
+    onChange: function (selectedDates) {
+      if (selectedDates.length === 2) {
+        const timeDiff = selectedDates[1] - selectedDates[0];
+        const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24)) + 1; // include end day
+        const total = days * pricePerDay;
+        document.getElementById("totalDisplay").innerHTML = `<strong>Total:</strong> ₹${total}`;
+      } else {
+        document.getElementById("totalDisplay").innerHTML = `<strong>Total:</strong> ₹0`;
+      }
+    },
+    onReady: (selectedDates, dateStr, instance) => {
+      instance.calendarContainer.classList.add("flatpickr-custom");
+    }
+  });
+</script>
+
+
+<style>
+  .flatpickr-custom .flatpickr-day.selected.startRange {
+    background: #007bff;
+    border-color: #007bff;
+  }
+
+  .flatpickr-custom .flatpickr-day.selected.endRange {
+    background: #28a745;
+    border-color: #28a745;
+  }
+
+  
+  .flatpickr-day {
+    background-image: none !important;
+  }
+
+  
+  .flatpickr-day.flatpickr-enabled:not(.flatpickr-disabled):not(.selected):not(.today) {
+    border: 2px solid black;
+    border-radius: 50%;
+    font-weight: bold;
+  }
+
+  
+  .flatpickr-day.flatpickr-disabled,
+  .flatpickr-day[aria-disabled="true"] {
+    color: #ccc;
+  }
+</style>

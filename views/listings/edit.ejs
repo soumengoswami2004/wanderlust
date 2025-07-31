@@ -1,0 +1,133 @@
+<% layout("/layouts/boilerplate") %>
+    <div class="row mt-3">
+        <div class="col-8 offset-2">
+
+    <h3>Edit your Listing</h3>
+
+    <form method="POST" action="/listings/<%= listing._id %>?_method=PUT" novalidate class="needs-validation" enctype="multipart/form-data">
+
+        <div class="mb-3">
+            <label for="title" class="form-label">Title</label>
+            <input name="listing[title]" value="<%= listing.title %>" type="text" class="form-control" required>
+            <div class="invalid-feedback">Please enter a title</div>
+        </div>
+
+        <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <textarea name="listing[description]" class="form-control" required><%= listing.description %></textarea>
+            <div class="invalid-feedback">Please enter a short description</div>
+        </div>
+
+    <div class="mb-3">
+    <label for="category" class="form-label">Category</label>
+    <select class="form-select" name="listing[category]" id="category">
+    <option value="Trending" <%= listing.category === "Trending" ? "selected" : "" %>>Trending</option>
+    <option value="Rooms" <%= listing.category === "Rooms" ? "selected" : "" %>>Rooms</option>
+    <option value="Mountains" <%= listing.category === "Mountains" ? "selected" : "" %>>Mountains</option>
+    <option value="Castles" <%= listing.category === "Castles" ? "selected" : "" %>>Castles</option>
+    <option value="Pools" <%= listing.category === "Pools" ? "selected" : "" %>>Pools</option>
+    <option value="Iconic Cities" <%= listing.category === "Iconic Cities" ? "selected" : "" %>>Iconic Cities</option>
+    <option value="Farming" <%= listing.category === "Farming" ? "selected" : "" %>>Farming</option>
+    <option value="Beach" <%= listing.category === "Beach" ? "selected" : "" %>>Beach</option>
+    <option value="Lake font" <%= listing.category === "Lake font" ? "selected" : "" %>>Lake font</option>
+    <option value="Boating" <%= listing.category === "Boating" ? "selected" : "" %>>Boating</option>
+    <option value="Gaming" <%= listing.category === "Gaming" ? "selected" : "" %>>Gaming</option>
+
+  </select>
+</div>
+
+
+<div class="mb-3">
+    <label class="form-label">Facilities Provided</label>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="listing[facilities]" value="WiFi" id="wifi" <%= listing.facilities && listing.facilities.includes('WiFi') ? 'checked' : '' %>>
+                <label class="form-check-label" for="wifi">WiFi</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="listing[facilities]" value="Parking" id="parking" <%= listing.facilities && listing.facilities.includes('Parking') ? 'checked' : '' %>>
+                <label class="form-check-label" for="parking">Parking</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="listing[facilities]" value="Pool" id="pool" <%= listing.facilities && listing.facilities.includes('Pool') ? 'checked' : '' %>>
+                <label class="form-check-label" for="pool">Pool</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="listing[facilities]" value="Gym" id="gym" <%= listing.facilities && listing.facilities.includes('Gym') ? 'checked' : '' %>>
+                <label class="form-check-label" for="gym">Gym</label>
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="listing[facilities]" value="Spa" id="spa" <%= listing.facilities && listing.facilities.includes('Spa') ? 'checked' : '' %>>
+                <label class="form-check-label" for="spa">Spa</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="listing[facilities]" value="Restaurant" id="restaurant" <%= listing.facilities && listing.facilities.includes('Restaurant') ? 'checked' : '' %>>
+                <label class="form-check-label" for="restaurant">Restaurant</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="listing[facilities]" value="Air Conditioning" id="ac" <%= listing.facilities && listing.facilities.includes('Air Conditioning') ? 'checked' : '' %>>
+                <label class="form-check-label" for="ac">Air Conditioning</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="listing[facilities]" value="Breakfast" id="breakfast" <%= listing.facilities && listing.facilities.includes('Breakfast') ? 'checked' : '' %>>
+                <label class="form-check-label" for="breakfast">Breakfast</label>
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="listing[facilities]" value="Laundry" id="laundry" <%= listing.facilities && listing.facilities.includes('Laundry') ? 'checked' : '' %>>
+                <label class="form-check-label" for="laundry">Laundry</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="listing[facilities]" value="24/7 Reception" id="reception" <%= listing.facilities && listing.facilities.includes('24/7 Reception') ? 'checked' : '' %>>
+                <label class="form-check-label" for="reception">24/7 Reception</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="listing[facilities]" value="Room Service" id="roomService" <%= listing.facilities && listing.facilities.includes('Room Service') ? 'checked' : '' %>>
+                <label class="form-check-label" for="roomService">Room Service</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="listing[facilities]" value="Pet Friendly" id="petFriendly" <%= listing.facilities && listing.facilities.includes('Pet Friendly') ? 'checked' : '' %>>
+                <label class="form-check-label" for="petFriendly">Pet Friendly</label>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+        <div class="mb-3">
+            <label for="image" class="form-label">Upload new image</label>
+            <input name="listing[image]"  type="file" class="form-control">
+            </div>
+            <div class="row">
+                <div class="mb-3 col md-4">
+                    <label for="price" class="form-label">Price</label>
+                    <input name="listing[price]" value="<%= listing.price %>"  type="number" class="form-control" required>
+                    <div class="invalid-feedback">Please enter a valid price</div>
+                </div>
+            
+        
+                <div class="mb-3 col md-8" >
+                    <label for="country" class="form-label">Country</label>
+                    <input name="listing[country]" value="<%= listing.country %>"  type="text" class="form-control" required>
+                    <div class="invalid-feedback">Please enter a valid country</div>
+                </div>
+            </div>
+        
+        <div class="mb-3">
+        <label for="location" class="form-label">Location</label>
+        <input name="listing[location]" value="<%= listing.location %>"  type="text" class="form-control" required>
+        <div class="invalid-feedback">Please enter a valid location</div>
+        </div>
+        <button class="btn btn-dark edit-btn mt-3">Edit</button>
+        <br><br>
+    </form>
+</div>
+</div>
+
+<!-- <script src="/js/script.js"></script> -->
