@@ -45,7 +45,7 @@
     <div class="col-8 offset-3">
     <h3><%= listing.title %></h3>
     </div>
-<div class="card col-6 offset-3 show-card listing-card">
+<div class="col-12 col-md-7 offset-md-3 mb-3">
         
             <img src="<%= listing.image.url %>" class="card-img-top show-img" alt="listing_image">
             <div class="card-body">
@@ -55,14 +55,15 @@
                 <br>
                 <%= listing.description %>
                 <br>
-                <b>&#8377;</b><%= listing.price.toLocaleString("en-IN") %> /per nigth
+    
+                <b>&#8377;</b><b><%= listing.price.toLocaleString("en-IN") %> /per nigth</b>
                 <br>
                 <i class="fa-solid fa-location-dot"></i>
-                <%= listing.location %>
+                <b><%= listing.location %></b>
                 <br>
                 <i class="fa-solid fa-earth-americas"> </i>
                 
-                <%= listing.country %>
+               <b><%= listing.country %></b>
             </p>
             </div>
     </div>
@@ -202,11 +203,10 @@
         </div>
         <% } %>
     </div>
-    <div class="col-7 offset-3 mb-3 ">
-            <h3>Where you'll be</h3>
-        <div id="map" style="height: 400px; width: 100%;">
-        </div>
-        </div>
+    <div class="col-12 col-md-7 offset-md-3 mb-3">
+  <h3>Where you'll be</h3>
+  <div id="map" style="height: 400px; border-radius:15px; width: 100%;"></div>
+</div>
 </div>
 
 <script src="/js/map.js"></script>
